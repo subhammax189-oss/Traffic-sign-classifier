@@ -4,14 +4,14 @@ import cv2
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPool2D, Dense, Flatten, Dropout
 
-# 🔥 Page Config
+# Page Config
 st.set_page_config(
     page_title="Traffic Sign Classifier",
     page_icon="🚦",
     layout="centered"
 )
 
-# 🔥 Custom Dark Theme Styling
+# Custom Dark Theme Styling
 st.markdown("""
     <style>
     body {
@@ -24,11 +24,11 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# 🔥 Title
+# Title
 st.markdown("<h1 style='text-align: center;'>🚦 Traffic Sign Classifier</h1>", unsafe_allow_html=True)
 st.markdown("<p style='text-align: center;'>Upload or drag & drop an image to classify</p>", unsafe_allow_html=True)
 
-# 🔥 Build Model
+# Build Model
 def build_model():
     model = Sequential()
 
@@ -50,7 +50,7 @@ def build_model():
 
     return model
 
-# 🔥 Load Model (cached)
+# Load Model (cached)
 @st.cache_resource
 def load_model_cached():
     model = build_model()
@@ -59,7 +59,7 @@ def load_model_cached():
 
 model = load_model_cached()
 
-# 🔥 Class Labels
+# Class Labels
 classes = {
     0:'Speed limit (20km/h)', 1:'Speed limit (30km/h)', 2:'Speed limit (50km/h)',
     3:'Speed limit (60km/h)', 4:'Speed limit (70km/h)', 5:'Speed limit (80km/h)',
@@ -78,7 +78,7 @@ classes = {
     42:'End no passing veh > 3.5 tons'
 }
 
-# 🔥 Upload (Drag & Drop supported automatically)
+# Upload (Drag & Drop supported automatically)
 uploaded_file = st.file_uploader(
     "📤 Drag & Drop or Upload Image",
     type=["jpg", "jpeg", "png"]
@@ -91,16 +91,16 @@ if uploaded_file is not None:
     # Display Image
     st.image(image, caption="📷 Uploaded Image", use_column_width=True)
 
-    # 🔥 Preprocess
+    # Preprocess
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     image = cv2.resize(image, (30, 30))
     image = image / 255.0
     image = np.expand_dims(image, axis=0)
 
-    # 🔥 Predict
+    # Predict
     predictions = model.predict(image)[0]
 
-    # 🔥 Top-3 Predictions
+    #  Top-3 Predictions
     top_indices = predictions.argsort()[-3:][::-1]
 
     st.markdown("## 🎯 Top Predictions")
@@ -109,7 +109,7 @@ if uploaded_file is not None:
         confidence = predictions[idx]
         st.write(f"**{i+1}. {classes[idx]} — {confidence*100:.2f}%**")
 
-    # 🔥 Confidence warning
+    # Confidence warning
     if np.max(predictions) < 0.5:
         st.warning("⚠️ Low confidence prediction")
 
