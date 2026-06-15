@@ -4,7 +4,7 @@ from preprocess import preprocess_image
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPool2D, Dense, Flatten, Dropout
 
-# 🔥 Build same model architecture used in training
+# Build same model architecture used in training
 def build_model():
     model = Sequential()
 
@@ -27,14 +27,14 @@ def build_model():
     return model
 
 
-# 🔥 Load model + weights
+# Load model + weights
 model = build_model()
 model.load_weights("../model/weights.weights.h5")
 
 print("✅ Model loaded successfully!")
 
 
-# 🔥 Class labels
+# Class labels
 classes = {
     0:'Speed limit (20km/h)', 1:'Speed limit (30km/h)', 2:'Speed limit (50km/h)',
     3:'Speed limit (60km/h)', 4:'Speed limit (70km/h)', 5:'Speed limit (80km/h)',
@@ -54,7 +54,7 @@ classes = {
 }
 
 
-# 🔥 Prediction function
+# Prediction function
 def predict(image_path):
     image = preprocess_image(image_path)
 
@@ -66,7 +66,7 @@ def predict(image_path):
     return classes[class_index], confidence
 
 
-# 🔥 Main execution
+# Main execution
 if __name__ == "__main__":
     img_path = "../static/test.jpeg"   # make sure filename matches
 
